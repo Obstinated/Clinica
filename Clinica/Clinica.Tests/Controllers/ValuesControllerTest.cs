@@ -7,6 +7,7 @@ using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Clinica;
 using Clinica.Controllers;
+using Clinica.DataAccess;
 
 namespace Clinica.Tests.Controllers
 {
@@ -20,7 +21,7 @@ namespace Clinica.Tests.Controllers
             ValuesController controller = new ValuesController();
 
             // Act
-            IEnumerable<string> result = controller.Get();
+            IEnumerable<Usuario> result = controller.Get();
 
             // Assert
             Assert.IsNotNull(result);

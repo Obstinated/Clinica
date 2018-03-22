@@ -7,23 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clinica.DataAccess
+namespace AccesoDatos
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoCita
+    public partial class Cita
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoCita()
-        {
-            this.Citas = new HashSet<Cita>();
-        }
-    
         public int Id { get; set; }
-        public string Descripcion { get; set; }
+        public int PacienteId { get; set; }
+        public System.DateTime Fecha { get; set; }
+        public int TipoCitaId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cita> Citas { get; set; }
+        public virtual Paciente Paciente { get; set; }
+        public virtual TipoCita TipoCita { get; set; }
     }
 }

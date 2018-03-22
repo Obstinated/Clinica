@@ -7,23 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clinica.DataAccess
+namespace AccesoDatos
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Rol
+    public partial class Paciente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Rol()
+        public Paciente()
         {
-            this.Usuarios = new HashSet<Usuario>();
+            this.Citas = new HashSet<Cita>();
         }
     
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public Nullable<byte> Edad { get; set; }
+        public string Sexo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuario> Usuarios { get; set; }
+        public virtual ICollection<Cita> Citas { get; set; }
     }
 }

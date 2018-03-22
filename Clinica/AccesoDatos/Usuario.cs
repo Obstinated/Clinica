@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clinica.DataAccess
+namespace AccesoDatos
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace Clinica.DataAccess
     {
         public int Id { get; set; }
         public string Usuario1 { get; set; }
-        public string Contraseña { get; set; }
+        public string Contrasenna { get; set; }
         public int RolId { get; set; }
     
         public virtual Rol Rol { get; set; }

@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clinica.DataAccess
+namespace AccesoDatos
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EntidadesDeClinica : DbContext
+    public partial class ClinicaEntities : DbContext
     {
-        public EntidadesDeClinica()
-            : base("name=EntidadesDeClinica")
+        public ClinicaEntities()
+            : base("name=ClinicaEntities")
         {
         }
     
@@ -25,10 +25,10 @@ namespace Clinica.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Rol> Rols { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Cita> Citas { get; set; }
         public virtual DbSet<Paciente> Pacientes { get; set; }
+        public virtual DbSet<Rol> Rols { get; set; }
         public virtual DbSet<TipoCita> TipoCitas { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
     }
 }

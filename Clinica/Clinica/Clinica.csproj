@@ -184,38 +184,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\AutenticacionController.cs" />
+    <Compile Include="Controllers\CitaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="DataAccess\Cita.cs">
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\ClinicaModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClinicaModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\ClinicaModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\ClinicaModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClinicaModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Paciente.cs">
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Rol.cs">
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\TipoCita.cs">
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\Usuario.cs">
-      <DependentUpon>ClinicaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,16 +198,6 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DataAccess\ClinicaModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClinicaModel.edmx</DependentUpon>
-      <LastGenOutput>ClinicaModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DataAccess\ClinicaModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClinicaModel.edmx</DependentUpon>
-      <LastGenOutput>ClinicaModel.cs</LastGenOutput>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -262,13 +225,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="DataAccess\ClinicaModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ClinicaModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataAccess\ClinicaModel.edmx.diagram">
-      <DependentUpon>ClinicaModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -289,10 +245,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Usuarios\Create.cshtml" />
+    <Content Include="Views\Usuarios\Delete.cshtml" />
+    <Content Include="Views\Usuarios\Details.cshtml" />
+    <Content Include="Views\Usuarios\Edit.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Autenticacion\" />
+    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -309,6 +272,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AccesoDatos\AccesoDatos.csproj">
+      <Project>{8e435aaf-7341-4142-9f4c-4b741424c4c2}</Project>
+      <Name>AccesoDatos</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

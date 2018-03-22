@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ClinicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ClinicaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cita">
           <Key>
             <PropertyRef Name="Id" />
@@ -43,7 +43,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Contraseña" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contrasenna" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RolId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Cita_Paciente">
@@ -101,10 +101,32 @@
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ClinicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PacienteId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TipoCitaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Paciente" Relationship="Self.FK_Cita_Paciente" FromRole="Cita" ToRole="Paciente" />
+          <NavigationProperty Name="TipoCita" Relationship="Self.FK_Cita_TipoCita" FromRole="Cita" ToRole="TipoCita" />
+        </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Edad" Type="Byte" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK_Cita_Paciente" FromRole="Paciente" ToRole="Cita" />
+        </EntityType>
         <EntityType Name="Rol">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,16 +135,48 @@
           <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
         </EntityType>
+        <EntityType Name="TipoCita">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK_Cita_TipoCita" FromRole="TipoCita" ToRole="Cita" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contrasenna" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RolId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
         </EntityType>
+        <Association Name="FK_Cita_Paciente">
+          <End Role="Paciente" Type="Self.Paciente" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paciente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="PacienteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cita_TipoCita">
+          <End Role="TipoCita" Type="Self.TipoCita" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCita">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="TipoCitaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -135,84 +189,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EntidadesDeClinica" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ClinicaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Citas" EntityType="Self.Cita" />
+          <EntitySet Name="Pacientes" EntityType="Self.Paciente" />
           <EntitySet Name="Rols" EntityType="Self.Rol" />
+          <EntitySet Name="TipoCitas" EntityType="Self.TipoCita" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Cita_Paciente" Association="Self.FK_Cita_Paciente">
+            <End Role="Paciente" EntitySet="Pacientes" />
+            <End Role="Cita" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cita_TipoCita" Association="Self.FK_Cita_TipoCita">
+            <End Role="TipoCita" EntitySet="TipoCitas" />
+            <End Role="Cita" EntitySet="Citas" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
             <End Role="Rol" EntitySet="Rols" />
             <End Role="Usuario" EntitySet="Usuarios" />
           </AssociationSet>
-          <EntitySet Name="Citas" EntityType="ClinicaModel.Cita" />
-          <EntitySet Name="Pacientes" EntityType="ClinicaModel.Paciente" />
-          <EntitySet Name="TipoCitas" EntityType="ClinicaModel.TipoCita" />
-          <AssociationSet Name="FK_Cita_Paciente" Association="ClinicaModel.FK_Cita_Paciente">
-            <End Role="Paciente" EntitySet="Pacientes" />
-            <End Role="Cita" EntitySet="Citas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cita_TipoCita" Association="ClinicaModel.FK_Cita_TipoCita">
-            <End Role="TipoCita" EntitySet="TipoCitas" />
-            <End Role="Cita" EntitySet="Citas" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Cita">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PacienteId" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TipoCitaId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Paciente" Relationship="ClinicaModel.FK_Cita_Paciente" FromRole="Cita" ToRole="Paciente" />
-          <NavigationProperty Name="TipoCita" Relationship="ClinicaModel.FK_Cita_TipoCita" FromRole="Cita" ToRole="TipoCita" />
-        </EntityType>
-        <EntityType Name="Paciente">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Edad" Type="Byte" />
-          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Citas" Relationship="ClinicaModel.FK_Cita_Paciente" FromRole="Paciente" ToRole="Cita" />
-        </EntityType>
-        <EntityType Name="TipoCita">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Citas" Relationship="ClinicaModel.FK_Cita_TipoCita" FromRole="TipoCita" ToRole="Cita" />
-        </EntityType>
-        <Association Name="FK_Cita_Paciente">
-          <End Type="ClinicaModel.Paciente" Role="Paciente" Multiplicity="1" />
-          <End Type="ClinicaModel.Cita" Role="Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Paciente">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="PacienteId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cita_TipoCita">
-          <End Type="ClinicaModel.TipoCita" Role="TipoCita" Multiplicity="1" />
-          <End Type="ClinicaModel.Cita" Role="Cita" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoCita">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Cita">
-              <PropertyRef Name="TipoCitaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ClinicaModelStoreContainer" CdmEntityContainer="EntidadesDeClinica">
+        <EntityContainerMapping StorageEntityContainer="ClinicaModelStoreContainer" CdmEntityContainer="ClinicaEntities">
+          <EntitySetMapping Name="Citas">
+            <EntityTypeMapping TypeName="ClinicaModel.Cita">
+              <MappingFragment StoreEntitySet="Cita">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="TipoCitaId" ColumnName="TipoCitaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacientes">
+            <EntityTypeMapping TypeName="ClinicaModel.Paciente">
+              <MappingFragment StoreEntitySet="Paciente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Rols">
             <EntityTypeMapping TypeName="ClinicaModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
@@ -221,45 +242,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TipoCitas">
+            <EntityTypeMapping TypeName="ClinicaModel.TipoCita">
+              <MappingFragment StoreEntitySet="TipoCita">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="ClinicaModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
-                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Citas">
-            <EntityTypeMapping TypeName="ClinicaModel.Cita">
-              <MappingFragment StoreEntitySet="Cita">
-                <ScalarProperty Name="TipoCitaId" ColumnName="TipoCitaId" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="PacienteId" ColumnName="PacienteId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pacientes">
-            <EntityTypeMapping TypeName="ClinicaModel.Paciente">
-              <MappingFragment StoreEntitySet="Paciente">
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="Edad" ColumnName="Edad" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoCitas">
-            <EntityTypeMapping TypeName="ClinicaModel.TipoCita">
-              <MappingFragment StoreEntitySet="TipoCita">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

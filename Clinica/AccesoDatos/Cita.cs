@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clinica.DataAccess
+namespace AccesoDatos
 {
     using System;
     using System.Collections.Generic;

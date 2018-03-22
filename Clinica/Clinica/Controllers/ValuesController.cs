@@ -1,24 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using AccesoDatos;
+using AccesoDatos.Repositorio;
 
 namespace Clinica.Controllers
 {
     public class ValuesController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        private ClinicaEntities db = new ClinicaEntities();
+        private UsuarioRepositorio repositorio = new UsuarioRepositorio(new ClinicaEntities());
+
+        // GET api/Autenticar
+        public Usuario Autenticar(string usuario, string contrasenna)
         {
-            return new string[] { "value1", "value2" };
+            var retorno = repositorio.AutenticarUsuario(usuario, contrasenna);
+            return retorno;
+        }
+
+        // GET api/values/values
+        public IEnumerable<Usuario> Get()
+        {
+            //var usuarios = db.Usuarios.Include(u => u.Rol);
+            var usuarios = repositorio.ObtenerTodos();
+            return usuarios.ToList();
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public Usuario Get(string usuario, string contrasenna)
         {
-            return "value";
+            //var usuario = db.Usuarios.FirstOrDefault(u => u.Contrasenna == id);
+            //return usuario;
+            var retorno = repositorio.AutenticarUsuario(usuario, contrasenna);
+            return retorno;
         }
 
         // POST api/values
