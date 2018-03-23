@@ -1,0 +1,14 @@
+
+<div class="row">
+  <div *ngIf="elUsuario == null; else aplicacion" >
+    <input #usuario type="text" placeholder="Usuario">
+    <input #contrasenna type="password" placeholder="Contraseña">
+    <button (click)="login(usuario.value, contrasenna.value)" class="btn btn-primary">Iniciar Seción</button>
+  </div>
+  <ng-template #aplicacion>
+    <div class="row col-12"> 
+      <button (click)="logout()" class="btn btn-primary">Cerrar Seción</button>
+    </div>
+      <app-menu class="row col-12"></app-menu>
+  </ng-template>
+</div>

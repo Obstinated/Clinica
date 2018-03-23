@@ -1,0 +1,16 @@
+<table class="col-12">
+    <tr>
+        <th>Fecha</th>
+        <th>Paciente</th> 
+        <th>Edad</th>
+        <th>Editar</th>
+        <th >Eliminar</th>
+    </tr>
+    <tr *ngFor="let cita of citas">
+      <td>{{cita.Fecha}}</td>
+      <td>{{cita.Paciente.Nombre}}</td>
+      <td>{{cita.Paciente.Edad}}</td>
+      <td><button (click)="editarCita(cita.Id);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="eliminarCita(cita.Id);" class="btn btn-link">Eliminar</button></td>
+    </tr>
+</table>

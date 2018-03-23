@@ -1,0 +1,14 @@
+<div class="row col-12">
+  <div class="col-3">
+    <ul class="list-group">
+        <li class="list-group-item"><button (click)="seleccionarCitas()" class="btn btn-link">Citas</button></li>
+        <li class="list-group-item"><button (click)="seleccionarPacientes()" class="btn btn-link">Pacientes</button></li>
+        <li class="list-group-item"><button (click)="seleccionarTiposCita()" class="btn btn-link">Tipos de Cita</button></li>
+    </ul>
+  </div>
+  <div class="col-9">
+      <app-cita *ngIf="mostrarCitas"></app-cita>
+      <app-paciente  *ngIf="mostrarPacientes"></app-paciente>
+      <app-tipo-cita  *ngIf="mostrarTiposCita"></app-tipo-cita>
+  </div>
+</div>
