@@ -1,3 +1,16 @@
-<p>
-  paciente works!
-</p>
+<table class="col-12">
+    <tr>
+        <th>Nombre</th>
+        <th>Edad</th> 
+        <th>Sexo</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+    <tr *ngFor="let paciente of pacientes">
+      <td>{{paciente.Nombre}}</td>
+      <td>{{paciente.Edad}}</td>
+      <td>{{paciente.Edad}}</td>
+      <td><button (click)="editarPaciente(paciente);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="eliminarPaciente(paciente.Id);" class="btn btn-link">Eliminar</button></td>
+    </tr>
+</table>

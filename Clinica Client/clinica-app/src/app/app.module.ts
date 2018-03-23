@@ -12,7 +12,9 @@ import { TipoCitaComponent } from './tipo-cita/tipo-cita.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { MenuComponent } from './menu/menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { PacienteService } from './paciente.service';
+import { TipoCitaService } from './tipo-cita.service';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     HttpClientModule,
   ],
-  providers: [UsuarioService, CitaService],
+  providers: [UsuarioService, CitaService, PacienteService, TipoCitaService, NgbModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

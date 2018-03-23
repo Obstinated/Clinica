@@ -1,3 +1,5 @@
+<button class="btn btn-outline-primary" (click)="openAgendar(content)">Agendar Cita</button>
+<hr>
 <table class="col-12">
     <tr>
         <th>Fecha</th>
@@ -10,7 +12,31 @@
       <td>{{cita.Fecha}}</td>
       <td>{{cita.Paciente.Nombre}}</td>
       <td>{{cita.Paciente.Edad}}</td>
-      <td><button (click)="editarCita(cita.Id);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="editarCita(cita.Id, cita);" class="btn btn-link">Editar</button></td>
       <td><button (click)="eliminarCita(cita.Id);" class="btn btn-link">Eliminar</button></td>
     </tr>
 </table>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{accion}} la cita</h4>
+
+        <!-- <select [(ngModel)]="laCita.PacienteId">
+            <option *ngFor="let p of pacientes" [value]="p.id">
+                {{p.Nombre}}
+            </option>
+        </select> -->
+        
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>En construcción&hellip;</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<pre>{{closeResult}}</pre>

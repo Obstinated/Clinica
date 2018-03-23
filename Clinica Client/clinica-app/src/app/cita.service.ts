@@ -24,8 +24,17 @@ export class CitaService {
     .do(data => console.log('Citas : ' + JSON.stringify(data)));
   }
 
-  eliminarCita(id) {
-    return this.http.delete(this._url + '/' + id);
+  eliminarCita(id): Observable<ICita> {
+    this.http.delete(this._url + '/' + id);
+    return null;
+  }
+
+  editarCita(id, cita: ICita): Observable<ICita> {
+    cita.PacienteId = cita.PacienteId + 5;
+    this.http.put(this._url + '/' + id, cita);
+    return this.http
+    .get<ICita>(this._url + '/' + id)
+    .do(data => console.log('Cita : ' + JSON.stringify(data)));
   }
 
 }

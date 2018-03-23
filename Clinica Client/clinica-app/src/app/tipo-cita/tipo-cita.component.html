@@ -1,3 +1,12 @@
-<p>
-  tipo-cita works!
-</p>
+<table class="col-12">
+    <tr>
+        <th>Descripción</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+    <tr *ngFor="let tipoCita of tipoCitas">
+      <td>{{tipoCita.Descripcion}}</td>
+      <td><button (click)="editarTipoCita(tipoCita);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="eliminarTipoCita(tipoCita.Id);" class="btn btn-link">Eliminar</button></td>
+    </tr>
+</table>

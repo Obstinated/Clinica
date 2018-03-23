@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { IUsuario } from '../usuario';
+import { ITipoCita } from '../tipoCita';
+import { TipoCitaService } from '../tipo-cita.service';
+
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tipo-cita',
@@ -8,9 +13,16 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 })
 export class TipoCitaComponent implements OnInit {
 
-  constructor() { }
+  public tipoCitas: ITipoCita[];
+  public latipoCita: ITipoCita;
+
+  constructor(private _tipoCitaService: TipoCitaService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this._tipoCitaService.obtenerTodosTiposCita()
+        .subscribe(data => { console.log(data); this.tipoCitas = data;
+        }, err => { console.log(err);
+        });
   }
 
 }
