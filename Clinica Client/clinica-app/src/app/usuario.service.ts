@@ -15,19 +15,22 @@ const httpOptions = {
 export class UsuarioService {
 
   private _url = '/api/Autenticacion/Autenticar';
-  private usuario: IUsuario;
+  private elUsuario: IUsuario;
 
   constructor(private http: HttpClient) { }
 
-  autenticarUsuario(usuario, contrasenna) {
-    usuario = this.http
+  autenticarUsuario(usuario, contrasenna): Observable<IUsuario> {
+    return this.http
     .get<IUsuario>(this._url + '?usuario=' + usuario + '&contrasenna=' + contrasenna)
-    .do(data => console.log('Usuarios : ' + JSON.stringify(data)));
-    return usuario;
+    .do(data => this.elUsuario = data);
   }
 
-  obtenerUsuario() {
-    return this.usuario;
+  obtenerUsuario(): IUsuario {
+    return  this.elUsuario;
+  }
+
+  deslogearUsuario() {
+    this.elUsuario = null;
   }
 
 }

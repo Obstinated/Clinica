@@ -1,3 +1,5 @@
+<button class="btn btn-outline-primary" (click)="abrirAgregar(content)">Agregar TipoCita</button>
+<hr>
 <table class="col-12">
     <tr>
         <th>Descripción</th>
@@ -10,3 +12,26 @@
       <td><button (click)="eliminarTipoCita(tipoCita.Id);" class="btn btn-link">Eliminar</button></td>
     </tr>
 </table>
+
+<ng-template #content let-c="close" let-d="dismiss" id="content">
+    <div class="modal-header">
+        <h4 class="modal-title">{{accion}} la TipoCita</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <form #tipoCitaForm="ngForm">
+                <div class="form-group">
+                    <label for="descripcion">Descripci[on</label>
+                    <input type="text" class="form-control" id="descripcion" required required [(ngModel)]="elTipoCita.Descripcion" name="descripcion"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)="realizarAccion(accion);c(accion)">{{accion}}</button>
+                </div>
+                 {{diagnostic}}
+            </form>
+        </div>
+    </div>
+</ng-template>

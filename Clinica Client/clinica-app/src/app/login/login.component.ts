@@ -21,11 +21,16 @@ export class LoginComponent implements OnInit {
     this._usuarioService.autenticarUsuario(usuario, contrasenna)
         .subscribe(data => { console.log(data); this.elUsuario = data;
         }, err => { console.log(err);
-        });
+      });
   }
 
   logout() {
     this.elUsuario = null;
+    this._usuarioService.deslogearUsuario();
+  }
+
+  private obtenerUsuario(): IUsuario {
+    return this.elUsuario;
   }
 
 }

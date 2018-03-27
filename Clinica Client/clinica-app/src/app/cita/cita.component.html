@@ -1,4 +1,4 @@
-<button class="btn btn-outline-primary" (click)="openAgendar(content)">Agendar Cita</button>
+<button class="btn btn-outline-primary" (click)="abrirAgendar(content)">Agendar Cita</button>
 <hr>
 <table class="col-12">
     <tr>
@@ -6,37 +6,49 @@
         <th>Paciente</th> 
         <th>Edad</th>
         <th>Editar</th>
-        <th >Eliminar</th>
+        <th *ngIf="elUsuario.RolId == 1">Eliminar</th>
     </tr>
     <tr *ngFor="let cita of citas">
-      <td>{{cita.Fecha}}</td>
+      <td>{{cita.Fecha | date:'yyyy-MM-dd'}}</td>
       <td>{{cita.Paciente.Nombre}}</td>
       <td>{{cita.Paciente.Edad}}</td>
-      <td><button (click)="editarCita(cita.Id, cita);" class="btn btn-link">Editar</button></td>
-      <td><button (click)="eliminarCita(cita.Id);" class="btn btn-link">Eliminar</button></td>
+      <td><button (click)="abrirEditar(content, cita);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="eliminarCita(cita.Id);"  *ngIf="elUsuario.RolId == 1" class="btn btn-link">Eliminar</button></td>
     </tr>
 </table>
 
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #content let-c="close" let-d="dismiss" id="content">
     <div class="modal-header">
-        <h4 class="modal-title">{{accion}} la cita</h4>
-
-        <!-- <select [(ngModel)]="laCita.PacienteId">
-            <option *ngFor="let p of pacientes" [value]="p.id">
-                {{p.Nombre}}
-            </option>
-        </select> -->
-        
+        <h4 class="modal-title">{{accion}} la Cita</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p>En construcción&hellip;</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+        <div class="container">
+            <form #citaForm="ngForm">
+                <div class="form-group">
+                    <label for="paciente">Paciente</label>
+                    <select class="form-control" id="paciente" required required [(ngModel)]="laCita.PacienteId" name="paciente">
+                        <option *ngFor="let paciente of pacientes" [value]="paciente.Id">{{paciente.Nombre}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <ngb-datepicker class="form-control" #dp required required [(ngModel)]="fecha" (navigate)="date = $event.next" name="fecha"></ngb-datepicker>
+                </div>
+                <div class="form-group">
+                    <label for="tipoCita">Tipo de Cita</label>
+                    <select class="form-control" id="tipoCita" required
+                        required [(ngModel)]="laCita.TipoCitaId" name="tipoCita">
+                        <option *ngFor="let tipoCita of tiposCita" [value]="tipoCita.Id">{{tipoCita.Descripcion}}</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)="realizarAccion(accion);c(accion)">{{accion}}</button>
+                </div>
+                 {{diagnostic}}
+            </form>
+        </div>
     </div>
 </ng-template>
-
-<pre>{{closeResult}}</pre>

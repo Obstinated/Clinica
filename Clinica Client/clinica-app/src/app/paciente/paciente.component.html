@@ -1,16 +1,53 @@
+<button class="btn btn-outline-primary" (click)="abrirAgregar(content)">Agregar Paciente</button>
+<hr>
 <table class="col-12">
     <tr>
         <th>Nombre</th>
         <th>Edad</th> 
         <th>Sexo</th>
         <th>Editar</th>
-        <th>Eliminar</th>
+        <th *ngIf="elUsuario.RolId == 1">Eliminar</th>
     </tr>
     <tr *ngFor="let paciente of pacientes">
       <td>{{paciente.Nombre}}</td>
       <td>{{paciente.Edad}}</td>
-      <td>{{paciente.Edad}}</td>
-      <td><button (click)="editarPaciente(paciente);" class="btn btn-link">Editar</button></td>
-      <td><button (click)="eliminarPaciente(paciente.Id);" class="btn btn-link">Eliminar</button></td>
+      <td>{{paciente.Sexo}}</td>
+      <td><button (click)="abrirEditar(content, paciente);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="eliminarPaciente(paciente.Id);"  *ngIf="elUsuario.RolId == 1" class="btn btn-link">Eliminar</button></td>
     </tr>
 </table>
+
+<ng-template #content let-c="close" let-d="dismiss" id="content">
+    <div class="modal-header">
+        <h4 class="modal-title">{{accion}} la Paciente</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <form #pacienteForm="ngForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" required required [(ngModel)]="elPaciente.Nombre" name="nombre"/>
+                </div>
+                <div class="form-group">
+                    <label for="edad">Edad</label>
+                    <input type="text" class="form-control" id="edad" required required [(ngModel)]="elPaciente.Edad" name="edad"/>
+                </div>
+                <div class="form-group">
+                    <label for="sexo">Sexo</label>
+                    <select class="form-control" id="tipoCita" required
+                        required [(ngModel)]="elPaciente.Sexo" name="sexo">
+                        <option>M</option>
+                        <option>F</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" (click)="realizarAccion(accion);c(accion)">{{accion}}</button>
+                </div>
+                 {{diagnostic}}
+            </form>
+        </div>
+    </div>
+</ng-template>

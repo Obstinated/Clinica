@@ -1,14 +1,14 @@
 
-<div class="row">
-  <div *ngIf="elUsuario == null; else aplicacion" >
+<div class="row col-12">
+  <div *ngIf="elUsuario == null; else aplicacion" class="row col-12">
     <input #usuario type="text" placeholder="Usuario">
     <input #contrasenna type="password" placeholder="Contraseña">
     <button (click)="login(usuario.value, contrasenna.value)" class="btn btn-primary">Iniciar Seción</button>
   </div>
   <ng-template #aplicacion>
-    <div class="row col-12"> 
-      <button (click)="logout()" class="btn btn-primary">Cerrar Seción</button>
-      <hr>
+      <div class="row col-12">
+        <button (click)="logout()" class="btn btn-primary col-offset-9 col-2">Cerrar Seción</button>
+        <hr>
     </div>
       <app-menu class="row col-12"></app-menu>
   </ng-template>
