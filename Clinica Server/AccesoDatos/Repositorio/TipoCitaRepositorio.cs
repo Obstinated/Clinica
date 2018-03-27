@@ -18,11 +18,5 @@ namespace AccesoDatos.Repositorio
             get { return Context as ClinicaEntities; }
         }
 
-        public TipoCita ObtenerTipoCitaConCitas(int id)
-        {
-            return ClinicaEntities.TipoCitas.
-                Include(tc => tc.Citas).
-               FirstOrDefault(tc => tc.Id == id);
-        }
     }
 }

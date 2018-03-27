@@ -42,19 +42,19 @@ export class TipoCitaComponent implements OnInit {
     this._tipoCitaService.obtenerTodosTiposCita().subscribe(
       data => { this.tipoCitas = data; },
       err => console.error(err),
-      () => console.log('Se cargaron las tipoCitas')
+      () => console.log('Se cargaron las tipo de Citas')
     );
   }
 
   eliminarTipoCita(id) {
-      if (confirm('¿Está seguro que quiere eliminar la tipoCita?')) {
+      if (confirm('¿Está seguro que quiere eliminar la tipo de Cita?')) {
         this._tipoCitaService.eliminarTipoCita(id).subscribe(
                 data => {
                   this.obtenerTipoCitas();
                 return true;
               },
             error => {
-                console.error('¡Error elimiando la tipoCita!');
+                console.error('¡Error elimiando la tipo de Cita!');
                 return Observable.throw(error);
               }
         );
@@ -68,7 +68,7 @@ export class TipoCitaComponent implements OnInit {
             return true;
           },
         error => {
-          console.error('¡Error creando la tipoCita!');
+          console.error('¡Error creando la tipo de Cita!');
             return Observable.throw(error);
           }
     );
@@ -81,7 +81,7 @@ export class TipoCitaComponent implements OnInit {
             return true;
           },
         error => {
-          console.error('¡Error actualizando la tipoCita!');
+          console.error('¡Error actualizando la tipo de Cita!');
             return Observable.throw(error);
           }
     );

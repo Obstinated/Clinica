@@ -55,7 +55,13 @@ namespace AccesoDatos.Repositorio
             Context.Set<TEntidad>().RemoveRange(entidades);
         }
 
-        public int Guardar()
+        public void Editar(TEntidad Entidad)
+        {
+            Context.Set<TEntidad>().Attach(Entidad);
+            Context.Entry(Entidad).State = EntityState.Modified;
+        }
+
+    public int Guardar()
         {
             return Context.SaveChanges();
         }

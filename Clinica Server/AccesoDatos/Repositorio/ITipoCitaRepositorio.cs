@@ -9,4 +9,5 @@ namespace AccesoDatos.Repositorio
     interface ITipoCitaRepositorio : IRepositorio<TipoCita>
     {
     }
+
 }

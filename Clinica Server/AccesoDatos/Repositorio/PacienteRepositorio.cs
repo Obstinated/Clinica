@@ -18,12 +18,6 @@ namespace AccesoDatos.Repositorio
             get { return Context as ClinicaEntities; }
         }
 
-        public Paciente ObtenerPacienteConCitas(int id)
-        {
-            return ClinicaEntities.Pacientes.
-               Include(p => p.Citas).
-               FirstOrDefault(p => p.Id == id);
-        }
 
     }
 }

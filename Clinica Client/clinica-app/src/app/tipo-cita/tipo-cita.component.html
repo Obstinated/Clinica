@@ -1,4 +1,4 @@
-<button class="btn btn-outline-primary" (click)="abrirAgregar(content)">Agregar TipoCita</button>
+<button class="btn btn-outline-primary" (click)="abrirAgregar(content)">Agregar Tipo de Cita</button>
 <hr>
 <table class="col-12">
     <tr>
@@ -8,14 +8,14 @@
     </tr>
     <tr *ngFor="let tipoCita of tipoCitas">
       <td>{{tipoCita.Descripcion}}</td>
-      <td><button (click)="editarTipoCita(tipoCita);" class="btn btn-link">Editar</button></td>
+      <td><button (click)="abrirEditar(content,tipoCita);" class="btn btn-link">Editar</button></td>
       <td><button (click)="eliminarTipoCita(tipoCita.Id);" class="btn btn-link">Eliminar</button></td>
     </tr>
 </table>
 
 <ng-template #content let-c="close" let-d="dismiss" id="content">
     <div class="modal-header">
-        <h4 class="modal-title">{{accion}} la TipoCita</h4>
+        <h4 class="modal-title">{{accion}} la Tipo de Cita</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -24,7 +24,7 @@
         <div class="container">
             <form #tipoCitaForm="ngForm">
                 <div class="form-group">
-                    <label for="descripcion">Descripci[on</label>
+                    <label for="descripcion">Descripción</label>
                     <input type="text" class="form-control" id="descripcion" required required [(ngModel)]="elTipoCita.Descripcion" name="descripcion"/>
                 </div>
                 <div class="modal-footer">

@@ -41,18 +41,20 @@ namespace Clinica.Controllers
         // PUT: api/Paciente/5
         public void Put(int id, [FromBody]string value)
         {
-            Delete(id);
-            Paciente PacienteNueva = JsonConvert.DeserializeObject<Paciente>(value);
-            repositorio.Agregar(PacienteNueva);
+            Paciente paciente = convertirAObjeto(value);
+            paciente.Id = id;
+            repositorio.Editar(paciente);
             repositorio.Guardar();
         }
 
         // DELETE: api/Paciente/5
         public void Delete(int id)
         {
-            Paciente Paciente = repositorio.ObtenerPacienteConCitas(id);
-            citaRepositorio.EliminarVarios(Paciente.Citas);
-            repositorio.Eliminar(Paciente);
+            Paciente pacietne = repositorio.Obtener(id);
+            IEnumerable<Cita> citas = citaRepositorio.Buscar(c => c.PacienteId == id);
+            citaRepositorio.EliminarVarios(citas);
+            citaRepositorio.Guardar();
+            repositorio.Eliminar(pacietne);
             repositorio.Guardar();
         }
 

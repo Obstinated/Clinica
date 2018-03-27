@@ -41,17 +41,19 @@ namespace Clinica.Controllers
         // PUT: api/TipoCita/5
         public void Put(int id, [FromBody]string value)
         {
-            TipoCita TipoCita = repositorio.Obtener(id);
-            TipoCita = convertirAObjeto(value);
-            TipoCita.Id = id;
+            TipoCita tipoCita= convertirAObjeto(value);
+            tipoCita.Id = id;
+            repositorio.Editar(tipoCita);
             repositorio.Guardar();
         }
 
         // DELETE: api/TipoCita/5
         public void Delete(int id)
         {
-            TipoCita TipoCita = repositorio.ObtenerTipoCitaConCitas(id);
-            citaRepositorio.EliminarVarios(TipoCita.Citas);
+            TipoCita TipoCita = repositorio.Obtener(id);
+            IEnumerable<Cita> citas = citaRepositorio.Buscar(c => c.TipoCitaId == id);
+            citaRepositorio.EliminarVarios(citas);
+            citaRepositorio.Guardar();
             repositorio.Eliminar(TipoCita);
             repositorio.Guardar();
         }

@@ -52,8 +52,8 @@ namespace Clinica.Controllers
             string mensajeError = repositorio.VerificarCita(citaNueva);
             if (mensajeError.Length == 0)
             {
-                Delete(id);
-                repositorio.Agregar(citaNueva);
+                citaNueva.Id = id;
+                repositorio.Editar(citaNueva);
                 repositorio.Guardar();
             }
             else
@@ -81,7 +81,6 @@ namespace Clinica.Controllers
                 string mensajeError = "Faltan campos requeridos por llenar";
                 throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Forbidden, mensajeError));
             }
-
         }
         
     }

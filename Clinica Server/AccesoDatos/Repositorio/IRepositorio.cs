@@ -18,6 +18,8 @@ namespace AccesoDatos.Repositorio
         void Eliminar(TEntidad entidad);
         void EliminarVarios(IEnumerable<TEntidad> entidades);
 
+        void Editar(TEntidad entidad);
+
         int Guardar();
     }
 }
