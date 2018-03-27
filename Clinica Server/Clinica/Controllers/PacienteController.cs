@@ -14,6 +14,7 @@ namespace Clinica.Controllers
     {
 
         private PacienteRepositorio repositorio = new PacienteRepositorio(new ClinicaEntities());
+        private CitaRepositorio citaRepositorio = new CitaRepositorio(new ClinicaEntities());
 
         // GET: api/Paciente
         public IEnumerable<Paciente> Get()
@@ -49,9 +50,24 @@ namespace Clinica.Controllers
         // DELETE: api/Paciente/5
         public void Delete(int id)
         {
-            Paciente PacienteVieja = repositorio.Obtener(id);
-            repositorio.Eliminar(PacienteVieja);
+            Paciente Paciente = repositorio.ObtenerPacienteConCitas(id);
+            citaRepositorio.EliminarVarios(Paciente.Citas);
+            repositorio.Eliminar(Paciente);
             repositorio.Guardar();
+        }
+
+        private Paciente convertirAObjeto(string value)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<Paciente>(value);
+            }
+            catch (Exception e)
+            {
+                string mensajeError = "Faltan campos requeridos por llenar";
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Forbidden, mensajeError));
+            }
+
         }
     }
 }

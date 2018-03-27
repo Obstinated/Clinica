@@ -22,7 +22,6 @@ namespace AccesoDatos.Repositorio
         public Usuario AutenticarUsuario(string usuario, string contrasenna)
         {
             return ClinicaEntities.Usuarios.
-                Include(u => u.Rol).
                 SingleOrDefault(u => u.Usuario1 == usuario && u.Contrasenna == contrasenna);
         }
     }

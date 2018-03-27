@@ -14,6 +14,7 @@ namespace Clinica.Controllers
     {
 
         private TipoCitaRepositorio repositorio = new TipoCitaRepositorio(new ClinicaEntities());
+        private CitaRepositorio citaRepositorio = new CitaRepositorio(new ClinicaEntities());
 
         // GET: api/TipoCita
         public IEnumerable<TipoCita> Get()
@@ -32,7 +33,7 @@ namespace Clinica.Controllers
         // POST: api/TipoCita
         public void Post([FromBody]string value)
         {
-            TipoCita TipoCita = JsonConvert.DeserializeObject<TipoCita>(value);
+            TipoCita TipoCita = convertirAObjeto(value);
             repositorio.Agregar(TipoCita);
             repositorio.Guardar();
         }
@@ -40,18 +41,33 @@ namespace Clinica.Controllers
         // PUT: api/TipoCita/5
         public void Put(int id, [FromBody]string value)
         {
-            Delete(id);
-            TipoCita TipoCitaNueva = JsonConvert.DeserializeObject<TipoCita>(value);
-            repositorio.Agregar(TipoCitaNueva);
+            TipoCita TipoCita = repositorio.Obtener(id);
+            TipoCita = convertirAObjeto(value);
+            TipoCita.Id = id;
             repositorio.Guardar();
         }
 
         // DELETE: api/TipoCita/5
         public void Delete(int id)
         {
-            TipoCita TipoCitaVieja = repositorio.Obtener(id);
-            repositorio.Eliminar(TipoCitaVieja);
+            TipoCita TipoCita = repositorio.ObtenerTipoCitaConCitas(id);
+            citaRepositorio.EliminarVarios(TipoCita.Citas);
+            repositorio.Eliminar(TipoCita);
             repositorio.Guardar();
+        }
+
+        private TipoCita convertirAObjeto(string value)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<TipoCita>(value);
+            }
+            catch (Exception e)
+            {
+                string mensajeError = "Faltan campos requeridos por llenar";
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.Forbidden, mensajeError));
+            }
+
         }
     }
 }

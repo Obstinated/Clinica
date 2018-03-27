@@ -18,11 +18,20 @@ namespace AccesoDatos.Repositorio
             get { return Context as ClinicaEntities; }
         }
 
-        public Boolean VerificarCita(Cita cita)
+        public string VerificarCita(Cita cita)
         {
+            string mensaje = "";
             Cita citaEncontrada = ClinicaEntities.Citas.
                 FirstOrDefault(c => c.Fecha == cita.Fecha && c.PacienteId == cita.PacienteId);
-            return citaEncontrada == null ? true : false;
+
+            if (citaEncontrada != null)
+                mensaje = "No se puede crear otra cita para el mismo paciente en el mismo día.";
+
+            DateTime hoy = DateTime.Now;
+            if (cita.Fecha <= hoy)
+                mensaje = "Las citas se deben agendar con mínimo 24 horas de antelación.";
+
+            return mensaje;
         }
 
         public new Cita Obtener(int id)
